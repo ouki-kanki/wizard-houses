@@ -8,7 +8,8 @@ type Query = {
   name?: RegExp
 }
 
-// Get all houses or house by name
+// not used
+// Get all houses or house by name with pagination
 export const getHouses = async (req: Request, res: Response) => {
   try {
     const { name, page = 1, limit = 5 } = req.query
@@ -49,9 +50,17 @@ export const getHouses = async (req: Request, res: Response) => {
   }
 }
 
+// get all houses or houses by name with partial match
 export const getHousesV2 = async (req: Request, res: Response) => {
   try {
-    const houses: IHouse[] | null = await House.find()
+    const { name } = req.query
+    let query: Query = {}
+    if (name) {
+      const regex = new RegExp(name as string, 'i')
+      query.name = regex 
+    }
+
+    const houses: IHouse[] | null = await House.find(query)
       .select('-__v')
       .populate({
         path: 'heads',
@@ -77,6 +86,7 @@ export const getHousesV2 = async (req: Request, res: Response) => {
 }
 
 // Create new House record
+// TODO: need to implement auth to use this endpoint 
 export const createHouse = async (req: Request<{}, {}, IHouse>, res: Response) => {
   try {
     const { heads, traits, ...houseData }: IHouse = req.body;
