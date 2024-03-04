@@ -56,8 +56,8 @@ body {
 
 body {
   color: var(--font-primary);
-  color: rgb(100 116 139);
-  background-color: floralwhite;
+  /* color: rgb(100 116 139); */
+  /* background-color: floralwhite; */
 }
 
 a {

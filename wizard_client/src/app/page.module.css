@@ -3,23 +3,39 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6rem; */
+  padding: 20px;
   min-height: 100vh;
 }
 
-.description {
-  display: inherit;
-  justify-content: inherit;
-  align-items: inherit;
-  font-size: 0.85rem;
-  max-width: var(--max-width);
-  width: 100%;
-  z-index: 2;
-  font-family: var(--font-mono);
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+
+
+.cardTitleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardDescription {
+  font-size: 1.2rem;
+  margin-top: auto;
+}
+
+.cardGradient {
+  border-radius: 10px;
+  margin-top: 20px;
+  height: 30px;
+  background: linear-gradient(to right, white, black);
+}
+
+.cardDescription span {
+  font-weight: bold;
+  line-height: 2px;
 }
 
 .description a {
@@ -84,6 +100,9 @@
   position: relative;
   padding: 4rem 0;
 }
+
+
+
 
 .center::before {
   background: var(--secondary-glow);
