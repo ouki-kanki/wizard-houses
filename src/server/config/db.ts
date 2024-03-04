@@ -13,3 +13,9 @@ const connectDB = async (): Promise<void> => {
 }
 
 export default connectDB;
+
+
+// TODO refactor to this
+// mongoose.Promise = Promise;
+// mongoose.connect(process.env.MONGODB_URI || '')
+// mongoose.connection.on('error', (error: Error) => console.log(error))
