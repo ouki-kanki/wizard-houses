@@ -1,5 +1,5 @@
 export interface IHouse {
-  _id: string;
+  id: string;
   name: string;
   houseColours: string;
   animal: string;

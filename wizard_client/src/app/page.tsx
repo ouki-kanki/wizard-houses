@@ -5,18 +5,9 @@ import { verdana } from "./config/confStyles";
 import { WizardHouse } from '@/app/components/WizardHouse';
 import type { IHouse } from "./types";
 import { Spinner } from "./ui/Spinner/Spinner";
-import { BASE_URL } from "./config/config";
+// import { BASE_URL } from "./config/config";
+import { getWizardHouses } from './_api/houses';
 
-
-// TODO: move this from here
-async function getWizardHouses(query?: string) {
-  try {
-      const response = await fetch(query ? `${BASE_URL}?name=${encodeURIComponent(query)}` : BASE_URL)  
-      return response.json();
-  } catch (error) {
-    console.log(error)
-  }  
-}
 
 type Params = {
   searchParams: {
@@ -34,11 +25,20 @@ export default function Home({ searchParams: { name }}: Params) {
       try {
         // TODO: this is better with useReducer
         const data = await getWizardHouses(name)
-        setHouses(data.houses)
+        setHouses(data)
+
+        console.log(data)
+
+        // TODO: if deploy the server is success use the above
+        // else refactor the response from the server to be of the same format
+        // setHouses(data.houses) 
         setIsLoading(false)
       } catch (error) {
-        // TODO: handle the error
+        if (error instanceof Error) {
+          throw new Error(error.message)
+        }
         console.log(error)
+        
         setIsLoading(false)
       }
     }
@@ -50,10 +50,10 @@ export default function Home({ searchParams: { name }}: Params) {
       {isLoading ? (
         <Spinner/>
       ) : (
-        houses.length > 0 ? houses.map((house: IHouse) => (
-          <WizardHouse house={house} key={house._id}/>
+        houses?.length > 0 ? houses.map((house: IHouse) => (
+          <WizardHouse house={house} key={house.id}/>
           )) : (
-            <div>could not load any wizard houses</div>
+            <div>could not load any wizard houses :(</div>
           )
         )
       }
