@@ -1,20 +1,36 @@
 import styles from "./page.module.css";
 import { verdana } from "./config/confStyles";
-import { Card } from "./components/Card";
+import { WizardHouse } from '@/app/components/WizardHouse';
+import type { IHouse } from "./types";
+const BASE_URL = 'http://localhost:5000/houses'
+import { Spinner } from "./ui/Spinner/Spinner";
 
-export default function Home() {
+
+// TODO: move this from here
+async function getWizardHouses(query?: string) {
+  try {
+      const response = await fetch(query ? `${BASE_URL}?name=${encodeURIComponent(query)}` : BASE_URL)  
+      return response.json();
+  } catch (error) {
+    console.log(error)
+  }  
+}
+
+type Params = {
+  searchParams: {
+    name?: string
+  }
+}
+
+export default async function Home({ searchParams: { name }}: Params) {
+  const { houses } = await getWizardHouses(name)
+  
   return (
     <main className={`${styles.main} ${verdana.className}`}>
-      <Card>
-        <div className={styles.cardContainer}>
-          <div className={styles.cardTitleContainer}>
-            <h2>Gryffindor</h2>
-            <h3>Lion</h3>
-          </div>
-          <div className={styles.cardGradient}></div>
-          <div className={styles.cardDescription}>Founder: <span>Roweda Ravenclaw</span></div>
-        </div>
-      </Card>
+      {houses && houses.map((house: IHouse) => (
+        <WizardHouse house={house} key={house._id}/>
+        ))}
     </main>
   );
 }
+
