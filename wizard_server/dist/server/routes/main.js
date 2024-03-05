@@ -7,6 +7,6 @@ const express_1 = __importDefault(require("express"));
 const houseController_1 = require("../controllers/houseController");
 const router = express_1.default.Router();
 router.get('/houses', houseController_1.getHousesV2);
-router.post('/houses', houseController_1.createHouse);
+// router.post('/houses', createHouse);
 exports.default = router;
 //# sourceMappingURL=main.js.map
