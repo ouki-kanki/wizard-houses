@@ -2,8 +2,8 @@ import styles from "./page.module.css";
 import { verdana } from "./config/confStyles";
 import { WizardHouse } from '@/app/components/WizardHouse';
 import type { IHouse } from "./types";
-const BASE_URL = 'http://localhost:5000/houses'
 import { Spinner } from "./ui/Spinner/Spinner";
+import { BASE_URL } from "./config/config";
 
 
 // TODO: move this from here

@@ -11,7 +11,6 @@ interface IWizardHouse {
 
 export const WizardHouse = ({ house: { name, founder, animal, houseColours }}: IWizardHouse) => {
   const [firstColor, secondColor] = extractColorsFromString(houseColours)
-  console.log(firstColor, secondColor)
   const gradientStyle = {
     background: `linear-gradient(to right, ${firstColor}, ${secondColor})`    
   }
