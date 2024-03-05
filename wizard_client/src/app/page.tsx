@@ -1,3 +1,5 @@
+'use client'
+import { useEffect, useState } from 'react'
 import styles from "./page.module.css";
 import { verdana } from "./config/confStyles";
 import { WizardHouse } from '@/app/components/WizardHouse';
@@ -22,14 +24,39 @@ type Params = {
   }
 }
 
-export default async function Home({ searchParams: { name }}: Params) {
-  const { houses } = await getWizardHouses(name)
-  
+export default function Home({ searchParams: { name }}: Params) {
+  const [isLoading, setIsLoading] = useState(false)
+  const [houses, setHouses] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true)
+      try {
+        // TODO: this is better with useReducer
+        const data = await getWizardHouses(name)
+        setHouses(data.houses)
+        setIsLoading(false)
+      } catch (error) {
+        // TODO: handle the error
+        console.log(error)
+        setIsLoading(false)
+      }
+    }
+    fetchData()
+  }, [name])
+
   return (
     <main className={`${styles.main} ${verdana.className}`}>
-      {houses && houses.map((house: IHouse) => (
-        <WizardHouse house={house} key={house._id}/>
-        ))}
+      {isLoading ? (
+        <Spinner/>
+      ) : (
+        houses.length > 0 ? houses.map((house: IHouse) => (
+          <WizardHouse house={house} key={house._id}/>
+          )) : (
+            <div>could not load any wizard houses</div>
+          )
+        )
+      }
     </main>
   );
 }
