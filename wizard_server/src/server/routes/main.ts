@@ -4,6 +4,6 @@ import { createHouse, getHouses, getHousesV2 } from '../controllers/houseControl
 const router = express.Router();
 
 router.get('/houses', getHousesV2);
-router.post('/houses', createHouse);
+// router.post('/houses', createHouse);
 
 export default router;
